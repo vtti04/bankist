@@ -131,8 +131,8 @@ tabsContainer.addEventListener('click', function (event) {
 });
 
 // ------*******--------MENU FADE ANIMATION ---------*******---------
+
 const handlerHover = function (event) {
-  console.log(this);
   if (event.target.classList.contains('nav__link')) {
     const link = event.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
@@ -187,38 +187,29 @@ nav.addEventListener('mouseout', handlerHover.bind(1));
 // nav.addEventListener('mouseout', function (event) {
 //   handler(event, 1);
 // });
-/* --------REFACTORING CODE------------------------------*/
+// ------*******--------STICKY NAVIGATION ---------*******---------
 
-// nav.addEventListener('mouseover', function (event) {
-//   if (event.target.classList.contains('nav__link')) {
-//     const clicked = event.target;
-//     const siblings = clicked.closest('.nav').querySelectorAll('.nav__link');
-//     console.log('mouse over is here, event.currentTarget', event.currentTarget);
-//     const logo = clicked.closest('.nav').querySelector('img');
-
-//     siblings.forEach(el => {
-//       if (el !== clicked) el.style.opacity = 0.5;
-//     });
-//     logo.style.opacity = 0.5;
-
-//     console.log('siblings: ', siblings, logo, clicked);
-//   }
+// const initialCoords = section1.getBoundingClientRect();
+// // console.log(initialCoords);
+// window.addEventListener('scroll', function (event) {
+//   // console.log('window.scrollY: ', window.scrollY);
+//   if (initialCoords.top < this.window.scrollY) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
 // });
-// nav.addEventListener('mouseout', function (event) {
-//   if (event.target.classList.contains('nav__link')) {
-//     const clicked = event.target;
-//     const siblings = clicked.closest('.nav').querySelectorAll('.nav__link');
-//     console.log('mouse OUT is here, event.currentTarget', event.currentTarget);
-//     const logo = clicked.closest('.nav').querySelector('img');
 
-//     siblings.forEach(el => {
-//       if (el !== clicked) el.style.opacity = 1;
-//     });
-//     logo.style.opacity = 1;
+// ------******* STICKY NAVIGATION: Intersection Observer API *******---------
+// const obsCallBack = function (enries, observe) {
+//   enries.forEach(entry => console.log('ENTRY: ', entry));
+// };
 
-//     console.log('siblings: ', siblings, logo, clicked);
-//   }
-// });
+// const obsOptions = {
+//   root: null,
+//   threshold: 0.1,
+// };
+
+// const observer = new IntersectionObserver(obsCallBack, obsOptions);
+// observer.observe(section1);
+
 // const h1 = document.querySelector('h1');
 // h1.addEventListener('mouseenter', function (event) {
 //   console.log(event);
