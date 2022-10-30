@@ -137,7 +137,6 @@ const handlerHover = function (event) {
     const link = event.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
     const logo = link.closest('.nav').querySelector('img');
-    console.log(logo);
     siblings.forEach(el => {
       if (el !== link) el.style.opacity = this;
     });
@@ -198,6 +197,20 @@ nav.addEventListener('mouseout', handlerHover.bind(1));
 // });
 
 // ------******* STICKY NAVIGATION: Intersection Observer API *******---------
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
 // const obsCallBack = function (enries, observe) {
 //   enries.forEach(entry => console.log('ENTRY: ', entry));
 // };
@@ -209,6 +222,26 @@ nav.addEventListener('mouseout', handlerHover.bind(1));
 
 // const observer = new IntersectionObserver(obsCallBack, obsOptions);
 // observer.observe(section1);
+
+// ------******* Reveal section: Intersection Observer API *******---------
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log('EnTRY: ', entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+const allSections = document.querySelectorAll('.section');
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null, // null if View port
+  threshold: 0.15,
+  // rootMargin: `-${}px`
+});
+allSections.forEach(function (section) {
+  console.log('SECTION: ', section);
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
 // const h1 = document.querySelector('h1');
 // h1.addEventListener('mouseenter', function (event) {
