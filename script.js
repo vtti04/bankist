@@ -226,7 +226,7 @@ headerObserver.observe(header);
 // ------******* Reveal section: Intersection Observer API *******---------
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log('EnTRY: ', entry);
+  // console.log('EnTRY: ', entry);
   if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
@@ -235,14 +235,53 @@ const allSections = document.querySelectorAll('.section');
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null, // null if View port
   threshold: 0.15,
-  // rootMargin: `-${}px`
+  // rootMargin: `-${15}px`,
 });
 allSections.forEach(function (section) {
-  console.log('SECTION: ', section);
+  // console.log('SECTION: ', section);
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');  /// ПРИБРАТИ!!!
 });
 
+// ------******* Lazy loading images: Intersection Observer API *******---------
+//
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  // console.log('observer:', observer);
+  // console.log(entry);
+  // console.log(entry.target.dataset);
+  if (!entry.isIntersecting) return;
+  // Replace the src data
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+// console.log(imgTargets);
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '-200px',
+});
+imgTargets.forEach(img => imgObserver.observe(img));
+
+// ------******* Slader *******---------
+//
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const slider = document.querySelector('.slider');
+slider.style.transform = 'scale(0.5)';
+slider.style.overflow = 'visible';
+console.log('Slider: ', slider);
+slides.forEach(
+  (slide, index) => (slide.style.transform = `translateX(${index * 100}%)`)
+);
+
+// 0, 100%, 200%, 300%
 // const h1 = document.querySelector('h1');
 // h1.addEventListener('mouseenter', function (event) {
 //   console.log(event);
