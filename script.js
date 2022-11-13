@@ -273,15 +273,47 @@ imgTargets.forEach(img => imgObserver.observe(img));
 //
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
-const slider = document.querySelector('.slider');
-slider.style.transform = 'scale(0.5)';
-slider.style.overflow = 'visible';
-console.log('Slider: ', slider);
-slides.forEach(
-  (slide, index) => (slide.style.transform = `translateX(${index * 100}%)`)
-);
+const btnRight = document.querySelector('.slider__btn--right');
+let curSlide = 0;
+const maxSlides = slides.length - 1;
+// it was for display how its work
+// const slider = document.querySelector('.slider');
+// slider.style.transform = 'scale(0.4) translateX(-150rem)';
+// slider.style.overflow = 'visible';
+// console.log('Slider: ', slider);
+// slides.forEach(
+//   (slide, index) => (slide.style.transform = `translateX(${index * 100}%)`)
+// );
 
+const goToSlide = function (curSlide) {
+  slides.forEach(
+    // curSlide =1 index =0: 0-1 = -1 *100 = -100%
+    // curSlide =1 index =1: 1-1 = 0 *100 = -0%
+    // curSlide =1 index =2: 2-1 = 1 *100 = 100%
+    //  -100%. 0, 100%, 200%
+    (slide, index) =>
+      (slide.style.transform = `translateX(${(index - curSlide) * 100}%)`)
+  );
+};
+
+goToSlide(0); // This is the code from line 283-285,  but it needs count from first slide thats becouse ziro
 // 0, 100%, 200%, 300%
+const prevSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlides + 1;
+  } else curSlide--;
+  goToSlide(curSlide);
+};
+const nextSlide = function () {
+  if (curSlide === maxSlides) {
+    curSlide = 0;
+  } else curSlide++;
+  goToSlide(curSlide);
+};
+// To go to the next slide
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
 // const h1 = document.querySelector('h1');
 // h1.addEventListener('mouseenter', function (event) {
 //   console.log(event);
