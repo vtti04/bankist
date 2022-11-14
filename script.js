@@ -391,3 +391,7 @@ slider();
 // console.log(h1.querySelectorAll('.highlight'));
 // console.log(h1.childNodes);
 // console.log(h1.children);
+
+document.addEventListener('DOMContentLoaded', function (event) {
+  console.log(event);
+});
